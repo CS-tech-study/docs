@@ -28,7 +28,7 @@
 - PermGen 영역은 GC 대상이 아니므로 static 변수가 거의 제거되지 않았지만, Java8 이후 Heap 영역으로 이동하여 제거 대상이 됨
 - Native memory는 OS가 관리하는 메모리 영역이지만, GC의 영향을 받을 수 있음 https://stackoverflow.com/questions/24074164/what-is-the-use-of-metaspace-in-java-8
 
-> 참고로 현재 default GC는 G1 GC이며, Java 21 버전에서는 ZGC young, old 객체에 대한 별도의 Generation으로 분리해 성능을 향상시켰다고 합니다. https://openjdk.org/jeps/439
+> 참고로 현재 default GC는 G1 GC이며, Java 21 버전에서 ZGC는 young, old 객체에 대한 별도의 Generation으로 분리해 성능을 향상시켰다고 합니다. https://openjdk.org/jeps/439
 
 <br>
 
