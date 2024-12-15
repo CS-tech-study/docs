@@ -31,6 +31,8 @@ JVM: JRE 일부분으로, 프로그램 실행 중 사용되는 런타임 데이�
 - Although the method area is **logically part of the heap**, simple implementations may choose not to either garbage collect or compact it.
 - https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4
 
+> Method Area는 논리적인 명세에 가까우며, 논리적인 영역은 [JVM 종류](https://en.wikipedia.org/wiki/List_of_Java_virtual_machines)에 따라 차이가 있을 것 같다는 피드백 받음 (이승복님) 
+
 <br>
 
 
