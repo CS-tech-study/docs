@@ -9,15 +9,15 @@
 ## Tomcat HTTP 요청을 받아들이는 I/O 
 ### 네트워크 패킷부터 Spring Container까지 요청이 도착하는 과정
 ![image](https://github.com/user-attachments/assets/1caefcd9-7543-46d5-8277-507fcb6b63c8)
-- 1. 1. OS 시스템 콜을 통해 이벤트 발생에 대한 port를 listen(소켓통신에서 client-serer 간 통신 과정 중 일부)하고 Socket Connection을 획득
-- 2. Socket Connection으로부터 패킷 획득하고 WAS가 해당 데이터를 파싱 해 HttpServletRequest(ServletRequest 인터페이스의 구현체) 객체 생성
-- 3. 생성한 HttpServletRequest 객체를 서블릿 컨테이너로 위임
+1. OS 시스템 콜을 통해 이벤트 발생에 대한 port를 listen(소켓통신에서 client-serer 간 통신 과정 중 일부)하고 Socket Connection을 획득
+2. Socket Connection으로부터 패킷 획득하고 WAS가 해당 데이터를 파싱 해 HttpServletRequest(ServletRequest 인터페이스의 구현체) 객체 생성
+3. 생성한 HttpServletRequest 객체를 서블릿 컨테이너로 위임
 
 ![image](https://github.com/user-attachments/assets/3edfe304-f7fe-46c2-8ef0-af5d4b7fdae0)
-- 1. 서블릿 컨테이너에서 모든 요청을 Dispatcher Servlet이 요청을 받고 받은 요청에 해당하는 컨트롤러(핸들러)를 찾기 위한 과정 진행
-- 2. Dispatcher Servlet은 HandlerMapping과 HandlerAdapter를 인터페이스로 가지고 있고, 스프링 프레임워크가 애플리케이션이 처음 시작할 때 해당 인터페이스에 미리 다양한 구현체들을 주입함. Dispatcher Servlet은 현재 요청에 맞는 HandlerMapping과 HandlerAdapter의 구현체를 찾아 요청을 위임할 컨트롤러 결정
-- 3. 결정된 컨트롤러로 요청 위임
-- 4. 스프링 컨텍스트(root application context)에서 비즈니스 로직 처리 및 DB connection 관리
+1. 서블릿 컨테이너에서 모든 요청을 Dispatcher Servlet이 요청을 받고 받은 요청에 해당하는 컨트롤러(핸들러)를 찾기 위한 과정 진행
+2. Dispatcher Servlet은 HandlerMapping과 HandlerAdapter를 인터페이스로 가지고 있고, 스프링 프레임워크가 애플리케이션이 처음 시작할 때 해당 인터페이스에 미리 다양한 구현체들을 주입함. Dispatcher Servlet은 현재 요청에 맞는 HandlerMapping과 HandlerAdapter의 구현체를 찾아 요청을 위임할 컨트롤러 결정
+3. 결정된 컨트롤러로 요청 위임
+4. 스프링 컨텍스트(root application context)에서 비즈니스 로직 처리 및 DB connection 관리
  
 ## Tomcat Connector
 - 톰캣으로 요청이 들어오는 첫 번째 문은 Connector이다.
