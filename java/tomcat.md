@@ -27,8 +27,10 @@
 
 - HTTP를 비롯한 다양한 애플리케이션 레이어의 프로토콜을 처리할 수 있도록 개발되었고 각 프로토콜마다 해당하는 Connector가 존재한다. 대표적으로 HTTP/1.1 Connector, HTTP/2 Connector 등이 있다.
 
-- ## Connector 종류
-- - BIO, NIO, NIO2, APR (tomcat-10.0부터 삭제)
+## Connector 종류
+- BIO, NIO, NIO2, APR (tomcat-10.0부터 삭제)
+
+<br>
 
 ## BIO Connector (Connection Per Thread, Request Per thread)
 - BIO (Blocking I/O) Connector는 Java에서 서블릿 컨테이너에서 사용되는 전통적인 I/O 방식
