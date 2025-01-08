@@ -1,7 +1,7 @@
 ## Tomcat
-- 요청하는 자원이 jsp나 자바코드로 적혀있는 자원을 요청하게 되면 아파치는 자바코드를 이해하지 못해서 응답할 수 없다. 그래서 아파치에 tomcat을 달면 아파치가 이해하지 못하는 자원을 받았을 때 tomcat한테 제어권을 넘겨버림
 - tomcat은 Apache재단에서 관리되며 Java 표준 인터페이스인 Servlet을 지원하기 위한 미들웨어
-- tomcat은 OS로부터 네트워크 요청 정보를 받아와 자바 객체로 만들고 이를 Servlet Container로 위
+- tomcat은 OS로부터 네트워크 요청 정보를 받아와 자바 객체로 만들고 이를 Servlet Container로 위임
+- 요청하는 자원이 jsp나 자바코드로 적혀있는 자원을 요청하게 되면 아파치는 자바코드를 이해하지 못해서 응답할 수 없다. 그래서 아파치에 tomcat을 달면 아파치가 이해하지 못하는 자원을 받았을 때 tomcat한테 제어권을 넘겨버림
 
 ![image](https://github.com/user-attachments/assets/a97f796b-9763-4ad7-a8fc-ce3e00537157)
 
@@ -154,6 +154,8 @@ public class NIOServer {
     }
 }
 ```
+
+<br>
 
 ## NIO와 BIO 비교
 | 항목 | BIO (Blocking I/O) | NIO (Non-blocking I/O) |
