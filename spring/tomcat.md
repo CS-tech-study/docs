@@ -1,7 +1,6 @@
 ## Tomcat
 자바 프로그램으로, JVM에서 동작하는 하나의 프로세스
 - WAS를 보면 크게 Servlet Container와 Spring Container로 나눠지는데, Servlet Container가 Tomcat에 해당
-
 - 소켓 프로그래밍을 해보면…
   - 서버 측에서는 listen 메서드로 요청을 기다리고
   - accept 메서드로  요청을 수락해 데이터 패킷 획득
@@ -32,7 +31,7 @@ Connector는 TCP port에서 요청을 listen 하면서 특정 engine으로 보�
 - maxConnections = maxThreads = 200
   - maxConnections: 동시 처리 가능한 최대 커넥션 수
   - maxThreads: 요청을 처리하기 위한 최대 스레드 수
-- *유휴 스레드 없으면 output links에서 대기…?*
+- *유휴 스레드 없으면 output queue에서 대기…?*
 
 <br>
 
@@ -43,7 +42,7 @@ Connector는 TCP port에서 요청을 listen 하면서 특정 engine으로 보�
 - maxConnections = 10,000, maxThreads = 200
   - maxConnections: 동시 처리 가능한 최대 커넥션 수
   - maxThreads: 요청을 처리하기 위한 최대 스레드 수
-- *최대 커넥션 수를 넘기면 output links에서 대기…?*
+- *최대 커넥션 수를 넘기면 output queue에서 대기…?*
 - 채널을 통해 데이터 들어와도 내부에서 워커 스레드 없으면 block…?
 
 ### Acceptor
