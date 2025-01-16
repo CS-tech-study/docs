@@ -90,5 +90,60 @@ Engine은 정의된 connector로 들어온 요청을 하위 host에게 전달해
 - 여러 Host가 하나의 Tomcat을 공유하니 전체적인 리소스를 최소한으로 사용 가능
 - but, tomcat 200개 스레드를 여러 서비스가 함께 사용하니 NIO로 동작한다 해도 요청량엔 이점이 아닐 것이라 생각
 
-> 모바일 환경에서 https://www.naver.com 을 입력하면 자동으로 https://m.naver.com 로 리다이렉션<br>
-> naver.com 을 입력하면 모바일 환경은 https://m.naver.com 으로, 웹은 https://www.naver.com 으로 리다이렉션
+<br>
+
+## Tomcat NIO vs Netty
+
+Tomcat NIO: Async + Blocking
+- 채널 등록하고, 워커 스레드 할당받으면 비즈니스 로직 시작
+- 비즈니스 로직에서 DB I/O 만나면 block
+- Poller가 여러 소켓 채널 관리
+  - Poller 기반의 멀티스레드 구조 (연결된 여러 요청에 대해 워커 스레드가 할당되어 처리되므로)
+
+Netty: Async + Non-blocking
+- JS의 Microtask Queue, Macrotask Queue 개념과 유사한 비동기 처리 제공
+- 이벤트 루프와 리스너 패턴으로 I/O 처리
+  - 이벤트 루프: 단일 스레드가 여러 I/O 작업 처리
+- Mono, Flux 처리를 위한 Async? non-blocking
+  - Mono, Flux로 응답 결과 비동기로 받음 (Future, CompletableFuture 와 유사)
+
+<br>
+
+## Timeout
+
+handshaking이 발생했다면
+- TCP 연결 성공 (이미 서로 간의 연결 상태 확인)
+- 읽기, 쓰기 버퍼가 생성되어 서로 간의 데이터 전송 준비가 완료된 상태
+- 응답 올 수 있음
+- 즉, 상대 서비스를 호출한 스레드가 handshaking을 완료하고 읽기, 쓰기 버퍼 생성해 데이터 받을 준비
+- 타임아웃으로 간주하면 4-way handshake
+  - 연결을 종료한다는 의사 전달
+  - Active close 소켓 기준으로 마지막 time_wait 상태가 끝나야만 읽기 및 쓰기 버퍼 close 할 것이라 예상
+  - Active close 상태 과정: established -> fin_wait_1 & 2 -> time_wait -> close
+  - Passive close 상태 과정: established -> close_wait -> last_ack -> close
+- half close로 쓰기 버퍼만 닫고, 읽기 버퍼는 그대로 열어 상대 데이터 받을 수 있을 것 같은데.. 버릴 것 같다고 예상
+
+handshaking이 발생하지 않았다면
+- TCP 연결 자체가 안된 것
+- 읽기, 쓰기 버퍼가 생성되지 않은 것
+- 그러므로 응답을 받을 수 없음
+
+<br>
+
+## OSI 7
+
+TCP 소켓: transport(4) layer에서 동작
+- L3: IP 주소로 목적지 네트워크 도달
+- L4: TCP(전송 보장 O) / UDP (전송 보장 X)
+
+HTTP 프로토콜: application(7) layer에서 동작
+- FTP, SMTP, HTTP….
+- 즉 HTTP 는 TCP 소켓을 통해 동작 가능
+
+Servlet Container: L4
+- TCP 소켓과 관련된 부분은 Tomcat(Servlet Container가 처리)
+- 즉 Tomcat이 TCP 소켓을 통해 HTTP 통신 가능하게 함
+
+Spring Container: :7
+- Spring Container가 요청을 처리할 수 있게 HttpServletRequest, Response로 변경
+
