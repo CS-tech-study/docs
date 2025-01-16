@@ -32,3 +32,11 @@
 **#### Channel**
 
 - 네트워크 소켓 또는 연결을 추상화한 객체
+
+### 관련 자료
+
+https://toychip.tistory.com/137
+
+https://colevelup.tistory.com/39
+
+https://internet-craft.tistory.com/99
