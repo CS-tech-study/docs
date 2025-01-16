@@ -115,7 +115,6 @@ handshaking이 발생했다면
 - TCP 연결 성공 (이미 서로 간의 연결 상태 확인)
 - 읽기, 쓰기 버퍼가 생성되어 서로 간의 데이터 전송 준비가 완료된 상태
 - 응답 올 수 있음
-- 즉, 상대 서비스를 호출한 스레드가 handshaking을 완료하고 읽기, 쓰기 버퍼 생성해 데이터 받을 준비
 - 타임아웃으로 간주하면 4-way handshake
   - 연결을 종료한다는 의사 전달
   - Active close 소켓 기준으로 마지막 time_wait 상태가 끝나야만 읽기 및 쓰기 버퍼 close 할 것이라 예상
@@ -144,6 +143,6 @@ Servlet Container: L4
 - TCP 소켓과 관련된 부분은 Tomcat(Servlet Container가 처리)
 - 즉 Tomcat이 TCP 소켓을 통해 HTTP 통신 가능하게 함
 
-Spring Container: :7
+Spring Container: L7
 - Spring Container가 요청을 처리할 수 있게 HttpServletRequest, Response로 변경
 
