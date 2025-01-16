@@ -13,7 +13,7 @@
 - 비동기 및 논블로킹 방식으로 동작
 
 ### 이벤트기반
-![](/images/event-loop-hierachy.png)
+![](/spring/images/event-loop-hierachy.png)
 
 **#### EventLoopGroup**
 
@@ -27,7 +27,7 @@
 - 네트워크 이벤트를 처리하기 위한 단일 스레드
 - N개의 채널에 할당되어 할당된 채널에서 발생하는 모든 이벤트를 처리합니다. 이를 통해 스레드 간 컨텍스트 스위칭을 최소화하고, 이벤트 처리의 순서를 보장합니다.
     
-    ![](/images/netty-eventloop.png)
+    ![](/spring/images/netty-eventloop.png)
 
 **#### Channel**
 
