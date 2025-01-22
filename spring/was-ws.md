@@ -32,7 +32,7 @@
 
 ## 로드 밸런싱을 위해 여러 WAS를 올린다면?
 
-![그림2](/spring/images/load_balancing.png)
+![그림2](/spring/images/load_balancing.jpg)
 
 > 출처: https://taetaetae.github.io/2019/08/04/apache-load-balancing/
 > 
