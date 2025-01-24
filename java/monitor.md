@@ -46,7 +46,7 @@ Wait set
 
 - ```await()```, ```signal()```, ```signalAll()``` -> Condition 인터페이스 메서드
 - ```wait()```, ```notify()```, ```notifyAll()``` -> 더 낮은 수준 (Object class)
-- 
+
 
 <br>
 
@@ -55,9 +55,9 @@ Wait set
 Monitor 방식은 Mesa, Hoare 스타일이 있다.
 
 Mesa style (Signal and Continue)
-- Lock을 잡고 있으면서 ```notify()``` 호출한 스레드는 ```notify()``` 호출 동시에 Lock을 반납하지 않음
+- Lock을 잡고 있으면서 ```notify()``` 호출한 스레드는 ```notify()``` 호출해도 Lock을 반납하지 않음
 - wait set에서 ```notify()``` 호출로 깨어난 스레드는 모니터에 바로 접근하는 것이 아니라, entry set으로 이동해 다시 대기 (sleep 상태 유지)
-- Runnable 상태로 바로 전환하지 않고, sleep 상태를 유지하는 이유는 해당 스레드가 CPU를 선점했지만, Lock이 아직 해제되지 않았다면 결국 다시 대기해야 함
+- Runnable 상태로 바로 전환하지 않고 sleep 상태를 유지하는 이유는 해당 스레드가 CPU를 선점했지만, Lock이 아직 해제되지 않았다면 결국 다시 대기해야 함
 - ```notify()``` 호출로 깨어난 스레드는 모니터로 바로 접근하는 것이 아니므로 condition이 깨질 수 있음 (sleep 상태 유지하다가 -> runnable 전환)
 - JVM이 사용하는 방식 (+ 대부분의 OS도 이 방식 사용)
 
@@ -65,7 +65,9 @@ Hoare style (Signal and Wait)
 - 조건별 wait set, ```wait()```, ```notify(```) 존재
 - ```notify()``` 호출로 깨어난 스레드는 모니터에 바로 진입 -> 공평성 문제 발생
 
-> Mesa style == Signal and Continue... Hoare style == Signal and Wait ...?
+<br>
+
+> Mesa style == Signal and Continue...? Hoare style == Signal and Wait...?
 > - 완벽하게 같다고 할 순 없다...
 > - Mesa/Hoare는 설계 철학과 기본적인 동작 규칙 등의 방법론적인 의미
 > - Signal and Continue/Wait는 특정 조건에서의 실행 흐름을 다루는 구현 세부 사항
@@ -74,8 +76,9 @@ Hoare style (Signal and Wait)
 
 Spurious wakeup 현상이 발생할 수 있기 때문에 임계 영역에 들어가기 전 다시 한 번 상태 확인을 한다.
 - Spurious wakeup이란 signal을 하지 않았음에도 스레드가 깨어나는 현상 (or 한 번의 signal로 여러 스레드가 깨어나는 현상)
-- 실제로 스레드 스케줄러도 하드웨어, 소프트웨어의 비정상적 동작으로 일시적인 블랙아웃을 겪을 수 있다.
-- 스케줄러의 블랙아웃동안 대기 중인 스레드에게 전달할 신호롤 놓치면 스레드가 영원히 대기 상태에 빠질 수 있고, 이를 방지하기 위해 스케줄러는 대기 중인 모든 스레드를 깨우는 방법을 사용
+- 실제로 스레드 스케줄러도 하드웨어, 소프트웨어의 비정상적 동작으로 일시적인 블랙아웃을 겪을 수 있음
+- 스케줄러의 블랙아웃동안 대기 중인 스레드에게 전달할 신호롤 놓치면 스레드가 영원히 대기 상태에 빠질 수 있고
+- 이를 방지하기 위해 스케줄러는 대기 중인 모든 스레드를 깨우는 방법을 사용
 
 <br>
 
@@ -105,4 +108,4 @@ public final native boolean compareAndSetInt(Object o, long offset,
 ### volatile
 - volatile 변수도 ```compareAndSetInt()``` 처럼 값을 메인 메모리에서 가져오지만, 
 - 로우 레벨의 여러 명령어가 재정렬 없이 실행하는 것이지 로우 레벨의 여러 명령어가 원자적으로 처리됨을 보장하지 않음
-- volatile 변수만 사용한다고 동시성 문제를 해결할 수 없음
+- **volatile 변수만 사용한다고 동시성 문제를 해결할 수 없음**
