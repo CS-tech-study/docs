@@ -1,18 +1,16 @@
-# CS study
-
-## Docs
-
 ### JAVA
 - [ ] concurrent 패키지 컬렉션 자료구조
 - [ ] semaphore, monitor 스레드 상태
-- [X] JVM Mesa style monitor 동작 방식
+- [X] [Mesa style monitor](https://github.com/CS-tech-study/docs/blob/main/java/monitor.md)
 - [ ] Docker 사용 시 스레드 상태
 
-### Tomcat
-- [ ] NIO 구조
+### Spring
+- [ ] Tomcat NIO
+- [ ] WAS vs Netty
 
 ### Network
 - [ ] Network Congestion
+- [ ] Load balancing
 
 ### MySQL
 - [ ] Optimizer scan 방식
