@@ -5,7 +5,7 @@
 ### JAVA
 - [ ] concurrent 패키지 컬렉션 자료구조
 - [ ] semaphore, monitor 스레드 상태
-- [ ] JVM Mesa style monitor 동작 방식
+- [X] JVM Mesa style monitor 동작 방식
 - [ ] Docker 사용 시 스레드 상태
 
 ### Tomcat
