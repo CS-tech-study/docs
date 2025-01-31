@@ -92,6 +92,9 @@ gpt 피셜로는 실무에서 다음과 같은 조합이 있다고 하는데..
 
 - Spring Cloud Gateway, Kong, AWS API Gateway 등 자체적으로 L7 기능이 충실하다면, 로드 밸런서를 **L4**로 두고 API Gateway로 고급 라우팅+보안+관리까지 처리.
 
+<img src="https://deploy.equinix.com/media/images/owKg-apigatewaylbcombined.png">
+
+https://deploy.equinix.com/blog/how-api-gateways-differ-from-load-balancers-and-which-to-use/
 
 
 ## 참고
