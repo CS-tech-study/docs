@@ -96,6 +96,9 @@ gpt 피셜로는 실무에서 다음과 같은 조합이 있다고 하는데..
 
 https://deploy.equinix.com/blog/how-api-gateways-differ-from-load-balancers-and-which-to-use/
 
+일단 목적에서 좀 차이가 있는것 같음..로드 밸런서는 **트래픽을 균등하게 분산**시키는거에 초점을 두고, 
+
+API gateway는 특정 요청을 처리할 수 있는 서버에 **라우팅**하는 것에 초점을 두는것 같음
 
 ## 참고
 ---
