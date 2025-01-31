@@ -1,12 +1,10 @@
 ### JAVA
 - [ ] concurrent 패키지 컬렉션 자료구조
-- [ ] semaphore, monitor 스레드 상태
 - [X] [Mesa style monitor](https://github.com/CS-tech-study/docs/blob/main/java/monitor.md)
 - [ ] Docker 사용 시 스레드 상태
 
 ### Spring
-- [ ] Tomcat NIO
-- [ ] WAS vs Netty
+- [X] Tomcat NIO
 
 ### Network
 - [ ] Network Congestion
