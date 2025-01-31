@@ -4,7 +4,7 @@
 - [ ] Docker 사용 시 스레드 상태
 
 ### Spring
-- [X] Tomcat NIO
+- [X] [Tomcat NIO](https://github.com/CS-tech-study/docs/blob/main/spring/tomcat-nio.md)
 
 ### Network
 - [ ] Network Congestion
