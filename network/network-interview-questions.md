@@ -60,4 +60,5 @@ High level
 ## CORS 정책
 - SOP (Same Origin Policy) : 같은 origin끼리 리소스 공유
 - CORS (Cross Origin Resource Sharing) : 지정한 다른 origin도 리소스 공유 가능
-React 와 AWS S3 관계에서 CORS 정책 문제 경험, AllowedMethods(POST), AllowedOrigins(http://localhost:3000) 을 설정해 문제 해결
+
+React 와 AWS S3 관계에서 CORS 정책 문제 경험 -> AllowedMethods(POST), AllowedOrigins(http://localhost:3000) 을 설정해 문제 해결
