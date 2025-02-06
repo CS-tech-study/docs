@@ -55,7 +55,7 @@
 
 ## 차이점 정리
 
-![그림1](/network/images/get-post)
+![그림1](/network/images/get-post.png)
 
 > 출처: https://whales.tistory.com/120
 > 
