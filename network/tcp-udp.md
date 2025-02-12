@@ -2,7 +2,7 @@
 
 - OSI 7계층 모델 중 4계층(TCP/IP 모델 전송계층)에서 사용
 
-![image.png](network/images/tcp.png)
+![image.png](/network/images/tcp.png)
 
 ### 특징
 
@@ -31,7 +31,7 @@
 
 - OSI 7계층 모델 중 4계층(TCP/IP 모델 전송계층)에서 사용
 
-![image.png](network/images/udp.png)
+![image.png](/network/images/udp.png)
 
 ### 특징
 
@@ -68,7 +68,7 @@ HTTP/2에서는 HTTP1.1에서의 message라는 단위외에 frame, stream 이라
 
 즉, Frame → Message → Stream 의 구조로, 각 스트림은 독립적인 메시지 흐름을 담당합니다.
 
-![image.png](network/images/stream.png)
+![image.png](/network/images/stream.png)
 
 HTTP1.1에서는 요청과 응답은 각각 하나의 메시지가 하나의 오브젝트의 요청과 응답을 담당하였습니다.
 
@@ -82,29 +82,29 @@ HTTP/2에서는 스트림 하나가 다수개의 요청하고, 이에 대한 다
 
 ### QUIC
 
-도입
+#### 도입
 
-    HTTPS 프로토콜은 TCP/IP와 TLS레이어가 나누어져 있어서 불필요한 라운드 트립 딜레이(RTT)가 발생합니다.
+HTTPS 프로토콜은 TCP/IP와 TLS레이어가 나누어져 있어서 불필요한 라운드 트립 딜레이(RTT)가 발생한다는 문제가 있습니다.
 
-    ![image.png](network/images/quic.png)
+![image.png](/network/images/quic.png)
 
-    그래서 이 불필요한 2번의 RTT를 한번으로 줄이기 위해 도입된 것이 QUIC입니다.
+그래서 이 불필요한 2번의 RTT를 한번으로 줄이기 위해 도입된 것이 QUIC입니다.
 
-지원 기능
+#### 지원 기능
 
-    QUIC은 UDP 위에 TCP 프로토콜의 흐름 제어, 오류 제어, 혼잡 제어와 SPDY의 스트림 멀티플렉싱 기능이 모두 구현되어 있습니다. 
+QUIC은 UDP 위에 TCP 프로토콜의 흐름 제어, 오류 제어, 혼잡 제어와 SPDY의 스트림 멀티플렉싱 기능이 모두 구현되어 있습니다. 
 
-    ![image.png](network/images/quic-tcp.png)
+![image.png](/network/images/quic-tcp.png)
 
-패킷 손실 감지 
+#### 패킷 손실 감지 
 
-    TCP/IP는 패킷을 재전송할 때 시퀀스 번호를 동일한 값을 주기 때문에, 서버가 보내준 ACK가 어떤 요청에 대해서 보내준 건지 판단할 수 없는 문제가 발생합니다. (retransmission ambiguity)
+TCP/IP는 패킷을 재전송할 때 시퀀스 번호를 동일한 값을 주기 때문에, 서버가 보내준 ACK가 어떤 요청에 대해서 보내준 건지 판단할 수 없는 문제가 발생합니다. (retransmission ambiguity)
 
-    QUIC은 재전송 패킷도 새로운 번호를 부여하도록해서 이 모호성 문제를 해결합니다. 
+QUIC은 재전송 패킷도 새로운 번호를 부여하도록해서 이 모호성 문제를 해결합니다. 
 
-    또한 클라이언트의 RTT계산을 돕기 위해, 서버에서 요청을 수행하는데 걸린 시간을 첨부해서 응답합니다.
+또한 클라이언트의 RTT계산을 돕기 위해, 서버에서 요청을 수행하는데 걸린 시간을 첨부해서 응답합니다.
 
-    TCP/IP보다 더욱 정확한 RTT 계산방식으로 인해 불필요한 패킷 재전송을 방지했습니다.
+TCP/IP보다 더욱 정확한 RTT 계산방식으로 인해 불필요한 패킷 재전송을 방지했습니다.
 
 ---
 
