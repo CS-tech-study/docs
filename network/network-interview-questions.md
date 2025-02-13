@@ -27,16 +27,21 @@ HTTP/1.0
 
 HTTP/1.1
 - 하나의 TCP 연결당 여러 HTTP 요청/응답 가능
-- but 순차 응답으로 HOL(Head Of Line) Blocking 발생
+- 1.1 pipelining으로 클라이언트는 여러 요청 한 번에 보낼 수 있지만, 서버는 한 파일이 종료되면 다음 파일 전송
+- 즉, 순차 응답으로 HOL(Head Of Line) Blocking 발생
 
 HTTP/2
 - multiplexing 방식으로 하나의 TCP 연결당 여러 스트림 존재
-- 응답 기다리지 않고 다음 패킷 보내 HOL(Head Of Line) Blocking 문제 일부 해결 (TCP 기반이라 완전히 해결 못함)
+- 응답 기다리지 않고 다음 패킷 보내 HOL(Head Of Line) Blocking 문제 일부 해결
+- TCP 기반으로 한 스트림에서 패킷 재전송 시 같은 연결의 모든 스트림 중단 
+- 즉, HOL blocking 문제 완벽히 해결 불가
 - 네이버: HTTP/1.1 + 2
 
 HTTP/3
 - QUIC(Quick UDP Internet Connections) 프로토콜로 각 스트림 개별적으로 패킷 손실 감지해 HOL blocking 문제 해결
+- 같은 커넥션에 여러 스트림 존재해도, HTTP/2와 달리 독립적으로 관리되어 전체 스트림이 blocking 되지 않음
 - UDP 기반이므로 3-way handshaking 과정 없음
+- UDP 기반이지만, 패킷 손실 감지
 - 크롬: HTTP/3
 
 <br>
@@ -55,6 +60,12 @@ High level
 - Load Balancer 제작
 - NIC 추가하여 인터넷 회선 분리 (인프라)
 
+### 네트워크 호출 최소화 설계
+
+- MSA 환경에서 각 마이크로서비스 간 통신 시 API Gateway를 거쳐 가지 않고, 다이렉트로 접근 (노드 1개 제거)
+- 여러 마이크로서비스에서 사용되는 데이터를 API Gateway에서 패킷 헤더에 추가해 공용 사용
+- 예를 들어 인증된 사용자 정보 -> 파라미터가 아닌 request 헤더에 추가해 전달 (유지보수)
+
 <br>
 
 ## CORS 정책
@@ -62,3 +73,19 @@ High level
 - CORS (Cross Origin Resource Sharing) : 지정한 다른 origin도 리소스 공유 가능
 
 React 와 AWS S3 관계에서 CORS 정책 문제 경험 -> AllowedMethods(POST), AllowedOrigins(http://localhost:3000) 을 설정해 문제 해결
+
+<br>
+
+## API Gateway 다운 시 대처 방안
+
+트래픽의 진입점인 API Gateway 다운 시 추가 트래픽을 어떻게 해겷할 것인가
+- 서버 이중화 (active-standby 구조, main 서버 다운 시 standby 로 트래픽 넘기기) 
+- BFF (Backend for Frontend) 패턴: 클라이언트에 맞는 게이트웨이 분리 (트래픽 분리)
+
+<br>
+
+## 인터넷 회선 분리
+
+standby 서버, replica 서버로의 동기화도 결국 네트워크 비용
+- 복제 관련 트래픽을 별도의 인터넷 회선으로 분리해 클라이언트 트래픽과 분리
+- IP 주소에서 호스트 주소뿐만 아니라 네트워크 주소도 다르게
