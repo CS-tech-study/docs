@@ -5,8 +5,9 @@
   - 단일 환경: @Transactional (proxy 기반 AOP로 동작)
   - 분산 환경: 한 요청에 대한 여러 트랜잭션으로 분리 (2PC, saga 패턴)
 - Consistency 일관성
-  - 데이터베이스의 무결성 유지
-  - A -> B 이체 시 A 잔고는 줄고, B 잔고는 늘어야 함
+  - 데이터베이스의 무결성 제약
+  - ‘1부터 10까지의 값만 가질 수 있다’ 같은 약속
+  - 비동기식으로 복제되는 시스템, ACID, CAP 정리 등 여러 상황에서 일관성의 의미가 조금씩 다름
 - Isolation 격리성
   - 각 트랜잭션은 데이터베이스에서 유일하게 실행되는 트랜잭션인 것처럼 동작할 수 있음을 의미 -> 여러 동시성 문제 방지
   - MySQL은 MVCC 기법으로 쓰기 작업과 읽기 작업이 서로 막지 않고 처리 가능
@@ -30,7 +31,9 @@
 - Level 2: Repeatable Read
   - MySQL에서는 MVCC 메커니즘을 통해 트랜잭션은 같은 버전의 데이터를 제공해 비반복 읽기 현상을 방지
   - MVCC 기법은 읽기, 쓰기 작업이 서로 막지 않아 빠른 처리 가능
-  - MySQL 해당 격리 수준부터 gap, next key lock 적용되어 쓰기 쿼리나 락을 사용한 읽기 쿼리를 잘못 작성하면 많은 부분이 잠길 수 있음
+  - MySQL 해당 격리 수준부터 gap, next key lock 적용되어 Phantom read 현상을 방지하나, 쓰기 쿼리나 락을 사용한 읽기 쿼리를 잘못 작성하면 많은 부분이 잠길 수 있음
+    - Phantom read: 한 트랜잭션에서 여러번 조회 시 새로운 데이터가 추가되거나 제거된 상태
+    - Write Skew: 서로 다른 행에 대해 독립적인 변경 발생 -> 이 과정에서 정합성이 깨지는 문제, Phantom read 현상 때문에 쓰기 스큐 발생할 수 있음
 - Level 3: Serializable
   - 공유 자원에 대한 트랜잭션 순차 처리해 일관성 제공
   - 읽기 작업도 S-Lock을 획득하기 위해 대기 -> 동시성 저하
@@ -79,3 +82,10 @@ A, B, C 순서로 복합키 생성
 - 오름차순 Range Scan은 빠름 (forward index scan)
 - 반면 내림차순 Range scan은 상대적으로 속도 느림 (backward index scan)
 - 그렇다고 마지막 부분을 가져오는 상황에서 Limit 사용해 forward index scan을 유도하면 더 많은 부분을 스캔할 가능성이 있어 차라리 DESC를 사용해 backward index scan이 낫다고 개인적으로 생각...
+
+### 데이터 일관성, 동기화
+
+- 세선 A: select ... where PK for update 진행, X, REC_NOT_GAP 락 획득
+- 세션 B: update ... where secondary index 시도
+  - index에 대한 X, REC_NOT_GAP 획득
+  - 그러나 PK에 대한 X, REC_NOT_GAP 락 획득 대기 (세션 A 작업이 커밋될 때까지 대기)
