@@ -35,11 +35,11 @@ Balanced Binary Search Tree
 
 ## ConcurrentHashMap
 - 동기화된 HashMap 이면서, synchronized 를 사용하지 않아 Hashtable보다 성능 좋음
-- 원래 버킷 기반 동기화
+- 버킷 기반 동기화
 - 버킷 단위로 락 획득 == 버킷 단위로 병렬 처리 가능
 - 버킷에는 여러 Node 존재, 해시값이 같은 노드뿐만 아니라 해시값이 달라도 같은 버킷에 존재할 수 있음.. 는 것 같음
 - 버킷의 여러 노드는 Linked List로 관리하다가 8(TREEIFY_THRESHOLD)개를 넘어가면 트리 구조로 변경
-- CAS 연산과 모니터 락으로 동기화 제공 
+- CAS 연산과 모니터 락(일부 로직)으로 동기화 제공 
 - synchronized 키워드는 ConcurrentHashMap만 사용하는 듯
   - Concurrent... LinkedDeque, LinkedQueue, SkipListMap, SkipListSet 코드에 synchronized 키워드 없음
 
@@ -54,8 +54,8 @@ hash 기반 자료구조는 해시 충돌 해소 필요
 ### Hash Collision
 
 Separate Chaining
-- 하나의 위치에서 여러 항목이 저장될 수 있는 방법
-- 일반적으로 LinkedList 인데.... java 8 부터 상황에 따라 Red-Black Tree로 변경된 듯
+- 하나의 위치에 여러 항목이 저장될 수 있는 방법
+- 일반적으로 LinkedList 인데.... java 8 부터 상황에 따라 Red-Black Tree로 변경된 듯 (자바 버전 확실하지 않음)
 - 그래서 충돌 발생 시 조회 시간 복잡도가 최악의 경우 O(N) 이었는데, O(logN)로 개선
 <br>
 
